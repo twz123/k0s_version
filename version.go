@@ -110,8 +110,9 @@ func (v *Version) Compare(b *Version) int {
 	return 1
 }
 
-// NewVersion returns a new Version created from the supplied string or an error if the string is not a valid version number
-func NewVersion(v string) (*Version, error) {
+// Parse parses the supplied string and returns a new Version created from it or
+// an error if the string is not a valid version number.
+func Parse(v string) (*Version, error) {
 	n, err := goversion.NewVersion(strings.TrimPrefix(v, "v"))
 	if err != nil {
 		return nil, err
@@ -120,12 +121,20 @@ func NewVersion(v string) (*Version, error) {
 	return &Version{Version: *n}, nil
 }
 
-// MustParse is like NewVersion but panics if the version cannot be parsed.
+// MustParse is like Parse but panics if the version cannot be parsed.
 // It simplifies safe initialization of global variables.
 func MustParse(v string) *Version {
-	version, err := NewVersion(v)
+	version, err := Parse(v)
 	if err != nil {
-		panic("github.com/k0sproject/version: NewVersion: " + err.Error())
+		panic("github.com/k0sproject/version: Parse: " + err.Error())
 	}
 	return version
+}
+
+// NewVersion returns a new Version created from the supplied string or an error
+// if the string is not a valid version number.
+//
+// Deprecated: Use Parse(string) (*Version, error) instead.
+func NewVersion(v string) (*Version, error) {
+	return Parse(v)
 }

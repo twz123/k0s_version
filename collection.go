@@ -9,7 +9,7 @@ type Collection []*Version
 func NewCollection(versions ...string) (Collection, error) {
 	c := make(Collection, len(versions))
 	for i, v := range versions {
-		nv, err := NewVersion(v)
+		nv, err := Parse(v)
 		if err != nil {
 			return Collection{}, fmt.Errorf("invalid version '%s': %w", v, err)
 		}

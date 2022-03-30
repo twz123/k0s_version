@@ -21,7 +21,7 @@ func main() {
 	versions := version.Collection{}
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
-		v, err := version.NewVersion(scanner.Text())
+		v, err := version.Parse(scanner.Text())
 		if err != nil {
 			panic(fmt.Errorf("failed to parse version: %w", err))
 		}

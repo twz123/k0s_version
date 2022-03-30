@@ -29,7 +29,7 @@ func LatestByPrerelease(allowpre bool) (*Version, error) {
 		return nil, err
 	}
 
-	return NewVersion(v)
+	return Parse(v)
 }
 
 // LatestStable returns the semantically sorted latest non-prerelease version from the online repository
